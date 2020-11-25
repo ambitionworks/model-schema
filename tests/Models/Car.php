@@ -1,15 +1,15 @@
 <?php
 
-namespace AmbitionWorks\ModelSchema\Tests\Extra\ChangeField;
+namespace AmbitionWorks\ModelSchema\Tests\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 
-class CarWithChangedField extends Model {
+class Car extends Model {
     protected $table = 'cars';
     public function schema(Blueprint $table)
     {
         $table->id();
-        $table->longText('make');
+        $table->string('make');
     }
 }

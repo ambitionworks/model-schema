@@ -1,12 +1,11 @@
 <?php
 
-namespace AmbitionWorks\ModelSchema\Tests\Extra\AddField;
+namespace AmbitionWorks\ModelSchema\Tests\Models\AddField;
 
-use Illuminate\Database\Eloquent\Model;
+use AmbitionWorks\ModelSchema\Tests\Models\Car;
 use Illuminate\Database\Schema\Blueprint;
 
-class CarWithAddedField extends Model {
-    protected $table = 'cars';
+class CarWithAddedField extends Car {
     public function schema(Blueprint $table)
     {
         $table->id();

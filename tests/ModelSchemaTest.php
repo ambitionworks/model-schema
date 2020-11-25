@@ -9,7 +9,7 @@ use Illuminate\Container\Container;
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Support\Facades\Facade;
 
-class ExampleTest extends TestCase
+class ModelSchemaTest extends TestCase
 {
     protected $db;
 
@@ -50,7 +50,7 @@ class ExampleTest extends TestCase
     /** @test */
     public function it_can_discover_models()
     {
-        $this->assertCount(1, (new DiscoverModels(getcwd().'/tests/Extra/', 'AmbitionWorks\ModelSchema\Tests\Extra\\'))->discover());
+        $this->assertCount(1, (new DiscoverModels(getcwd().'/tests/Models/', 'AmbitionWorks\ModelSchema\Tests\Models\\'))->discover());
     }
 
     /** @test */
@@ -64,37 +64,37 @@ class ExampleTest extends TestCase
     /** @test */
     public function it_creates_model_table()
     {
-        ModelMigrate::run((new DiscoverModels(getcwd().'/tests/Extra/', 'AmbitionWorks\ModelSchema\Tests\Extra\\'))->discover());
+        ModelMigrate::run((new DiscoverModels(getcwd().'/tests/Models/', 'AmbitionWorks\ModelSchema\Tests\Models\\'))->discover());
         $this->assertTrue($this->db->connection()->getSchemaBuilder()->hasTable('cars'));
     }
 
     /** @test */
     public function it_can_add_fields()
     {
-        ModelMigrate::run((new DiscoverModels(getcwd().'/tests/Extra/', 'AmbitionWorks\ModelSchema\Tests\Extra\\'))->discover());
+        ModelMigrate::run((new DiscoverModels(getcwd().'/tests/Models/', 'AmbitionWorks\ModelSchema\Tests\Models\\'))->discover());
         $this->assertFalse($this->db->connection()->getSchemaBuilder()->hasColumn('cars', 'year'));
 
-        ModelMigrate::run((new DiscoverModels(getcwd().'/tests/Extra/AddField', 'AmbitionWorks\ModelSchema\Tests\Extra\AddField\\'))->discover());
+        ModelMigrate::run((new DiscoverModels(getcwd().'/tests/Models/AddField', 'AmbitionWorks\ModelSchema\Tests\Models\AddField\\'))->discover());
         $this->assertTrue($this->db->connection()->getSchemaBuilder()->hasColumn('cars', 'year'));
     }
 
     /** @test */
     public function it_can_delete_fields()
     {
-        ModelMigrate::run((new DiscoverModels(getcwd().'/tests/Extra/', 'AmbitionWorks\ModelSchema\Tests\Extra\\'))->discover());
+        ModelMigrate::run((new DiscoverModels(getcwd().'/tests/Models/', 'AmbitionWorks\ModelSchema\Tests\Models\\'))->discover());
         $this->assertTrue($this->db->connection()->getSchemaBuilder()->hasColumn('cars', 'make'));
 
-        ModelMigrate::run((new DiscoverModels(getcwd().'/tests/Extra/DeleteField', 'AmbitionWorks\ModelSchema\Tests\Extra\DeleteField\\'))->discover());
+        ModelMigrate::run((new DiscoverModels(getcwd().'/tests/Models/DeleteField', 'AmbitionWorks\ModelSchema\Tests\Models\DeleteField\\'))->discover());
         $this->assertFalse($this->db->connection()->getSchemaBuilder()->hasColumn('cars', 'make'));
     }
 
     /** @test */
     public function it_can_change_fields()
     {
-        ModelMigrate::run((new DiscoverModels(getcwd().'/tests/Extra/', 'AmbitionWorks\ModelSchema\Tests\Extra\\'))->discover());
+        ModelMigrate::run((new DiscoverModels(getcwd().'/tests/Models/', 'AmbitionWorks\ModelSchema\Tests\Models\\'))->discover());
         $this->assertEquals('string', $this->db->connection()->getSchemaBuilder()->getColumnType('cars', 'make'));
 
-        ModelMigrate::run((new DiscoverModels(getcwd().'/tests/Extra/ChangeField', 'AmbitionWorks\ModelSchema\Tests\Extra\ChangeField\\'))->discover());
+        ModelMigrate::run((new DiscoverModels(getcwd().'/tests/Models/ChangeField', 'AmbitionWorks\ModelSchema\Tests\Models\ChangeField\\'))->discover());
         $this->assertEquals('text', $this->db->connection()->getSchemaBuilder()->getColumnType('cars', 'make'));
     }
 }
