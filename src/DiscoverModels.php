@@ -39,6 +39,30 @@ class DiscoverModels
     }
 
     /**
+     * Set the path to models.
+     *
+     * @param string $path
+     * @return self
+     */
+    public function withPath(string $path): self
+    {
+        $this->path = $path;
+        return $this;
+    }
+
+    /**
+     * Set the model namespace.
+     *
+     * @param string $namespace
+     * @return self
+     */
+    public function withNamespace(string $namespace): self
+    {
+        $this->namespace = $namespace;
+        return $this;
+    }
+
+    /**
      * Reads all models in the path and returns a FQCN.
      *
      * @return array
@@ -46,11 +70,11 @@ class DiscoverModels
     public function discover(): array
     {
         return collect((new Filesystem)->allFiles($this->path))
-        ->map(function ($item) {
-            list($model,) = explode('.', $item->getBasename());
-            return $this->namespace.$model;
-        })->filter(function ($model) {
-            return is_subclass_of($model, Model::class);
-        })->toArray();
+            ->map(function ($item) {
+                list($model,) = explode('.', $item->getBasename());
+                return $this->namespace.$model;
+            })->filter(function ($model) {
+                return is_subclass_of($model, Model::class);
+            })->toArray();
     }
 }
