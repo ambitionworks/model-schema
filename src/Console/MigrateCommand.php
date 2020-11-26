@@ -30,6 +30,8 @@ class MigrateCommand extends Command
      */
     public function handle()
     {
+        $this->info('Running migrations for model schemas...');
         ModelMigrate::run((new DiscoverModels)->discover());
+        $this->info('Finished!');
     }
 }
