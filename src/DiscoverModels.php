@@ -30,12 +30,8 @@ class DiscoverModels
      */
     public function __construct(string $path = null, string $namespace = null)
     {
-        $this->path = $path ? $path : app_path('Models');
-        if ($namespace) {
-            $this->namespace = $namespace;
-        } else {
-            $namespace = Container::getInstance()->getNamespace().'Models\\';
-        }
+        $this->path = $path ?? app_path('Models');
+        $this->namespace = $namespace ?? Container::getInstance()->getNamespace().'Models\\';
     }
 
     /**
